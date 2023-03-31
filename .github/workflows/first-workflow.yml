@@ -1,0 +1,14 @@
+name: First workflow
+on: workflow_dispatch
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: First step
+        run: echo "Hello!";
+
+      - name: First step
+        run: ls -la;
+
+      - name: Third step
+        run: echo "Good buy!";
