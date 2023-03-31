@@ -11,6 +11,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
+          cache: 'npm'
 
       - name: Lint
         run: npm run lint
