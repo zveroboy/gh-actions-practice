@@ -1,0 +1,10 @@
+name: Milestone workflow
+on: 
+  milestone:
+    types: [opened, closed]
+jobs:
+  second-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug
+        run: echo "{{toJSON(github.event)}}";
