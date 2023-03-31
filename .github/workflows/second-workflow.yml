@@ -13,8 +13,8 @@ jobs:
           node-version-file: .node-version
           cache: 'npm'
 
-      - name: Lint
-        run: npm run lint
-
       - name: Install
         run: npm install
+        
+      - name: Lint
+        run: npm run lint
