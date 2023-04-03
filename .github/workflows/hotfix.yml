@@ -1,5 +1,10 @@
 name: Hotfix to prod workflow
-on: workflow_dispatch
+on:
+  pull_request:
+    branches:
+      - prod
+    types:
+      - closed
 
 jobs:
   greeting_job:
@@ -7,7 +12,6 @@ jobs:
     steps:
       - name: "Say Hello Mona it's Monday"
         run: echo "${{ toJSON(github) }}";
-
 
 # on:
 #   pull_request:
