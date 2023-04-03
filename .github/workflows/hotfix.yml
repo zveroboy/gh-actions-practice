@@ -7,11 +7,16 @@ on:
       - closed
 
 jobs:
-  greeting_job:
+  if_merged:
+    if: github.event.pull_request.merged == true && github.head_ref != 'main'
     runs-on: ubuntu-latest
     steps:
-      - name: "Say Hello Mona it's Monday"
+      - name: Debug
         run: echo "${{ toJSON(github) }}";
+      - name: Create a pull request containing hotfix to main
+        run: gh pr create -B main -H ${{ github.head_ref }} --title 'Merge prod hotfix ${{ github.head_ref }} into main' --body 'Created by Github action'
+        env:
+          GH_ACTION_TOKEN: ${{ secrets.GH_ACTION_TOKEN }}
 
 # on:
 #   pull_request:
