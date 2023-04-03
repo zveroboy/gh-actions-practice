@@ -16,7 +16,7 @@ jobs:
       - name: Create a pull request containing hotfix to main
         run: gh pr create -B main -H ${{ github.head_ref }} --title 'Merge prod hotfix ${{ github.head_ref }} into main' --body 'Created by Github action'
         env:
-          GH_ACTION_TOKEN: ${{ secrets.GH_ACTION_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
 
 # on:
 #   pull_request:
