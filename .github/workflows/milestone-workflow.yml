@@ -1,10 +1,29 @@
-name: Milestone workflow
-on: 
+name: New milestone workflow
+on:
   milestone:
-    types: [opened, closed]
+    types: [opened]
 jobs:
   second-job:
+    env:
+      GH_TOKEN: ${{ github.token }}
     runs-on: ubuntu-latest
     steps:
-      - name: Debug
-        run: echo "${{ toJSON(github.event) }}";
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Run script file
+        id: bump-version
+        run: |
+          chmod +x ./scripts/increment-version.sh
+          echo "NEW_VERSION=$(./scripts/increment-version.sh)" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Create new branch and push
+        run: |
+          git switch -c {{ steps.bump-version.outputs.NEW_VERSION }} main
+          git push -u origin {{ steps.bump-version.outputs.NEW_VERSION }}
+
+      - name: Create a pull request containing hotfix to main
+        run: gh pr create -B main -H {{ steps.bump-version.outputs.NEW_VERSION }} --title 'Bump version to {{ steps.bump-version.outputs.NEW_VERSION }}' --body 'Created by Github action'
