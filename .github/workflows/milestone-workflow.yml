@@ -1,5 +1,6 @@
 name: New milestone workflow
 on:
+  workflow_dispatch:
   milestone:
     types: [opened]
 jobs:
